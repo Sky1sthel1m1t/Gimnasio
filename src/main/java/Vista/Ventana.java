@@ -8,11 +8,13 @@ public class Ventana extends JFrame {
 
     private JButton btnPanelEmpleados = new JButton("Administrar Empleados");
     private JButton btnPanelSuscriptores = new JButton("Administrar Suscriptores");
+    private JButton btnPanelClase = new JButton("Administrar Clases");
     private JButton btnVolver = new JButton("Volver");
 
     private JPanel panelPrincipal = new JPanel();
     private PanelEmpleados panelEmpleados;
     private PanelClientes panelSuscriptores;
+    private PanelClase panelClase;
 
     private ArrayList<JPanel> paneles = new ArrayList<>();
 
@@ -29,11 +31,13 @@ public class Ventana extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         int x = this.getWidth()/2 - 100;
-        int y;
+        int y = (this.getHeight() / 2) - 100;
 
-        btnPanelEmpleados.setBounds(x, (this.getHeight() / 2) - 100, 200,30);
-        y = btnPanelEmpleados.getY();
-        btnPanelSuscriptores.setBounds(x, y + 100, 200,30);
+        btnPanelEmpleados.setBounds(x, y, 200,30);
+        y += 40;
+        btnPanelSuscriptores.setBounds(x, y, 200,30);
+        y += 40;
+        btnPanelClase.setBounds(x,y,200,30);
 
         btnPanelEmpleados.addActionListener(e -> {
             if (paneles.size() == 2){
@@ -59,7 +63,19 @@ public class Ventana extends JFrame {
             panelPrincipal.setVisible(false);
             this.add(panelSuscriptores);
             paneles.add(panelSuscriptores);
+        });
 
+        btnPanelClase.addActionListener(e -> {
+            if (paneles.size() == 2){
+                paneles.remove(1);
+            }
+
+            panelClase = new PanelClase(this.getSize());
+            btnVolver.setBounds(0,0,75,30);
+            panelClase.add(btnVolver);
+            panelPrincipal.setVisible(false);
+            this.add(panelClase);
+            paneles.add(panelClase);
         });
 
         btnVolver.addActionListener(e -> {
@@ -73,6 +89,7 @@ public class Ventana extends JFrame {
         panelPrincipal.setBackground(Color.BLUE);
         panelPrincipal.add(btnPanelEmpleados);
         panelPrincipal.add(btnPanelSuscriptores);
+        panelPrincipal.add(btnPanelClase);
         paneles.add(panelPrincipal);
 
         this.getContentPane().add(panelPrincipal);

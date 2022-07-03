@@ -6,4 +6,8 @@ public record Horario(Integer ID, String Dia, String HoraInicio, String HoraFina
         return new String[]{ID + "",Dia,HoraInicio,HoraFinal,Empleados_CI + ""};
     }
 
+    @Override
+    public String toString() {
+        return Dia + " - " + HoraInicio + " - " + HoraFinal;
+    }
 }

@@ -35,7 +35,7 @@ public class PanelInstructores extends JPanel {
     private boolean idAutomatico = true;
 
     JTextField txtID = new JTextField();
-    JTextField txtDia = new JTextField();
+    JComboBox<String> cbDia = new JComboBox<>();
     JTextField txtHoraInicio = new JTextField();
     JTextField txtHoraFinal = new JTextField();
 
@@ -113,7 +113,7 @@ public class PanelInstructores extends JPanel {
         lbDia.setBounds(x,y,100,30);
         lbDia.setHorizontalAlignment(JLabel.RIGHT);
         x+=100;
-        txtDia.setBounds(x,y,150,30);
+        cbDia.setBounds(x,y,150,30);
         y = 20;
         x += 150;
         lbHoraInicio.setBounds(x,y,100,30);
@@ -145,7 +145,7 @@ public class PanelInstructores extends JPanel {
                 }
             }
 
-            String dia = txtDia.getText();
+            String dia = (String) cbDia.getSelectedItem();
             String HoraInicio = txtHoraInicio.getText();
             String HoraFinal = txtHoraFinal.getText();
             Horario horario = new Horario(id,dia,HoraInicio,HoraFinal, empleado.CI());
@@ -160,12 +160,14 @@ public class PanelInstructores extends JPanel {
             panelSeleccionar.setVisible(true);
         });
 
+        cargarDias();
+
         panelRegistrar.add(lbDia);
         panelRegistrar.add(lbID);
         panelRegistrar.add(lbHoraInicio);
         panelRegistrar.add(lbHoraFinal);
         panelRegistrar.add(txtID);
-        panelRegistrar.add(txtDia);
+        panelRegistrar.add(cbDia);
         panelRegistrar.add(txtHoraInicio);
         panelRegistrar.add(txtHoraFinal);
         panelRegistrar.add(btnAgregar);
@@ -196,9 +198,16 @@ public class PanelInstructores extends JPanel {
         }
     }
 
+    public void cargarDias(){
+        cbDia.addItem("Lunes");
+        cbDia.addItem("Martes");
+        cbDia.addItem("Miercoles");
+        cbDia.addItem("Jueves");
+        cbDia.addItem("Viernes");
+    }
+
     private void limpiarDatos(){
         txtID.setText("");
-        txtDia.setText("");
         txtHoraInicio.setText("");
         txtHoraFinal.setText("");
     }

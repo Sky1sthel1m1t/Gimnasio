@@ -1,6 +1,5 @@
 package DAO;
 
-import Modelo.Cliente;
 import Modelo.Conexion;
 import Modelo.Horario;
 

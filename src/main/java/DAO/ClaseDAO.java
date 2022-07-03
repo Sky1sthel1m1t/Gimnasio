@@ -76,4 +76,25 @@ public class ClaseDAO extends AbstractDao<Clase>{
             throw new RuntimeException(e);
         }
     }
+
+    public ArrayList<String> columnas(){
+        ArrayList<String> columnas = new ArrayList<>();
+        Conexion conexion = Conexion.getInstance();
+
+        String comando = "DESC Clases";
+
+        try {
+            conexion.conectar();
+            Statement statement = conexion.getConexion().createStatement();
+            ResultSet rs = conexion.consulta(statement,comando);
+            while (rs.next()){
+                String aux = rs.getString("Field");
+                columnas.add(aux);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return columnas;
+    }
 }
