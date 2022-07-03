@@ -3,6 +3,7 @@ package DAO;
 import Modelo.Conexion;
 import Modelo.Empleado;
 
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -95,7 +96,9 @@ public class EmpleadoDAO extends AbstractDao<Empleado>{
             conexion.conectar();
             Statement statement = conexion.getConexion().createStatement();
             conexion.ejecutar(statement, comando);
+            JOptionPane.showMessageDialog(null,"Se registró exitosamente al empleado");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"No se ha podido registrar al empleado");
             throw new RuntimeException(e);
         }
     }

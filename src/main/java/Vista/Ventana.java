@@ -2,15 +2,19 @@ package Vista;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Ventana extends JFrame {
 
     private JButton btnPanelEmpleados = new JButton("Administrar Empleados");
-    private JButton btnPanelSuscriptores = new JButton("Administrar Empleados");
+    private JButton btnPanelSuscriptores = new JButton("Administrar Suscriptores");
+    private JButton btnVolver = new JButton("Volver");
 
     private JPanel panelPrincipal = new JPanel();
     private PanelEmpleados panelEmpleados;
-    private PanelClientes panelClientes;
+    private PanelClientes panelSuscriptores;
+
+    private ArrayList<JPanel> paneles = new ArrayList<>();
 
     public Ventana(){
         init1();
@@ -32,9 +36,35 @@ public class Ventana extends JFrame {
         btnPanelSuscriptores.setBounds(x, y + 100, 200,30);
 
         btnPanelEmpleados.addActionListener(e -> {
-            this.remove(panelPrincipal);
+            if (paneles.size() == 2){
+                paneles.remove(1);
+            }
+
             panelEmpleados = new PanelEmpleados(this.getSize());
+            btnVolver.setBounds(0,0,75,30);
+            panelEmpleados.add(btnVolver);
+            panelPrincipal.setVisible(false);
             this.add(panelEmpleados);
+            paneles.add(panelEmpleados);
+        });
+
+        btnPanelSuscriptores.addActionListener(e -> {
+            if (paneles.size() == 2){
+                paneles.remove(1);
+            }
+
+            panelSuscriptores = new PanelClientes(this.getSize());
+            btnVolver.setBounds(0,0,75,30);
+            panelSuscriptores.add(btnVolver);
+            panelPrincipal.setVisible(false);
+            this.add(panelSuscriptores);
+            paneles.add(panelSuscriptores);
+
+        });
+
+        btnVolver.addActionListener(e -> {
+            paneles.get(1).setVisible(false);
+            panelPrincipal.setVisible(true);
         });
 
         panelPrincipal.setLayout(null);
@@ -43,9 +73,12 @@ public class Ventana extends JFrame {
         panelPrincipal.setBackground(Color.BLUE);
         panelPrincipal.add(btnPanelEmpleados);
         panelPrincipal.add(btnPanelSuscriptores);
+        paneles.add(panelPrincipal);
 
         this.getContentPane().add(panelPrincipal);
         this.pack();
     }
+
+
 
 }
