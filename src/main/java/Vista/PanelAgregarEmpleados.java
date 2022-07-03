@@ -2,6 +2,7 @@ package Vista;
 
 import DAO.EmpleadoDAO;
 import Modelo.Empleado;
+import PlaceHolders.TextPrompt;
 
 import javax.swing.*;
 
@@ -85,16 +86,20 @@ public class PanelAgregarEmpleados extends JPanel {
         txtApellidos.setBounds(x,y,150,30);
         y+=40;
         txtdtContratacion.setBounds(x,y,150,30);
+        TextPrompt ph1 = new TextPrompt("YYYY-MM-DD",txtdtContratacion);
         y+=40;
         txtSueldo.setBounds(x,y,150,30);
         y+=40;
         txtHoraEntrada.setBounds(x,y,150,30);
+        TextPrompt ph2 = new TextPrompt("HH-MM-SS",txtHoraEntrada);
         y+=40;
         txtHoraSalida.setBounds(x,y,150,30);
+        TextPrompt ph3 = new TextPrompt("HH-MM-SS",txtHoraSalida);
         y+=40;
         txtClaseEmpleado.setBounds(x,y,150,30);
         y+=40;
         txtTipo.setBounds(x,y,150,30);
+        TextPrompt ph5 = new TextPrompt("Campo solo para instructores",txtTipo);
 
         btnAgregar.addActionListener(e -> {
             int CI = Integer.parseInt(txtCI.getText());

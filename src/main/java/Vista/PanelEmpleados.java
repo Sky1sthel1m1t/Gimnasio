@@ -91,8 +91,15 @@ public class PanelEmpleados extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     int fila = jTable.getSelectedRow();
-                    if (defaultTableModel.getValueAt(fila, 7).equals("Instructor")){
-                        System.out.println("Hola");
+
+                    String aux = (String) defaultTableModel.getValueAt(fila, 0);
+                    int CI = Integer.parseInt(aux);
+
+                    Empleado empleado = empleadoDAO.get(CI);
+
+                    if (empleado.claseEmpleado().equalsIgnoreCase("Instructor")){
+                        PanelInstructores panelInstructores = new PanelInstructores(empleado);
+                        new VentanaEmergente(panelInstructores);
                     }
                 }
             }
