@@ -9,12 +9,16 @@ public class Ventana extends JFrame {
     private JButton btnPanelEmpleados = new JButton("Administrar Empleados");
     private JButton btnPanelSuscriptores = new JButton("Administrar Suscriptores");
     private JButton btnPanelClase = new JButton("Administrar Clases");
+    private JButton btnPanelZonas = new JButton("Administrar Zonas");
+    private JButton btnPanelSuscripciones = new JButton("Administrar Suscripciones");
     private JButton btnVolver = new JButton("Volver");
 
     private JPanel panelPrincipal = new JPanel();
     private PanelEmpleados panelEmpleados;
-    private PanelClientes panelSuscriptores;
+    private PanelSuscriptores panelSuscriptores;
     private PanelClase panelClase;
+    private PanelZonas panelZonas;
+    private PanelSuscripciones panelSuscripciones;
 
     private ArrayList<JPanel> paneles = new ArrayList<>();
 
@@ -31,13 +35,17 @@ public class Ventana extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         int x = this.getWidth()/2 - 100;
-        int y = (this.getHeight() / 2) - 100;
+        int y = (this.getHeight() / 2) - 200;
 
         btnPanelEmpleados.setBounds(x, y, 200,30);
         y += 40;
         btnPanelSuscriptores.setBounds(x, y, 200,30);
         y += 40;
         btnPanelClase.setBounds(x,y,200,30);
+        y += 40;
+        btnPanelZonas.setBounds(x,y,200,30);
+        y += 40;
+        btnPanelSuscripciones.setBounds(x,y,200,30);
 
         btnPanelEmpleados.addActionListener(e -> {
             if (paneles.size() == 2){
@@ -57,7 +65,7 @@ public class Ventana extends JFrame {
                 paneles.remove(1);
             }
 
-            panelSuscriptores = new PanelClientes(this.getSize());
+            panelSuscriptores = new PanelSuscriptores(this.getSize());
             btnVolver.setBounds(0,0,75,30);
             panelSuscriptores.add(btnVolver);
             panelPrincipal.setVisible(false);
@@ -78,6 +86,32 @@ public class Ventana extends JFrame {
             paneles.add(panelClase);
         });
 
+        btnPanelZonas.addActionListener(e -> {
+            if (paneles.size() == 2){
+                paneles.remove(1);
+            }
+
+            panelZonas = new PanelZonas(this.getSize());
+            btnVolver.setBounds(0,0,75,30);
+            panelZonas.add(btnVolver);
+            panelPrincipal.setVisible(false);
+            this.add(panelZonas);
+            paneles.add(panelZonas);
+        });
+
+        btnPanelSuscripciones.addActionListener(e -> {
+            if (paneles.size() == 2){
+                paneles.remove(1);
+            }
+
+            panelSuscripciones = new PanelSuscripciones(this.getSize());
+            btnVolver.setBounds(0,0,75,30);
+            panelSuscripciones.add(btnVolver);
+            panelPrincipal.setVisible(false);
+            this.add(panelSuscripciones);
+            paneles.add(panelSuscripciones);
+        });
+
         btnVolver.addActionListener(e -> {
             paneles.get(1).setVisible(false);
             panelPrincipal.setVisible(true);
@@ -90,6 +124,8 @@ public class Ventana extends JFrame {
         panelPrincipal.add(btnPanelEmpleados);
         panelPrincipal.add(btnPanelSuscriptores);
         panelPrincipal.add(btnPanelClase);
+        panelPrincipal.add(btnPanelZonas);
+        panelPrincipal.add(btnPanelSuscripciones);
         paneles.add(panelPrincipal);
 
         this.getContentPane().add(panelPrincipal);
