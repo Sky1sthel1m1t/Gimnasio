@@ -32,6 +32,8 @@ public class ClaseDAO extends AbstractDao<Clase>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return clase;
     }
 
@@ -57,6 +59,8 @@ public class ClaseDAO extends AbstractDao<Clase>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return clases;
     }
 
@@ -75,6 +79,8 @@ public class ClaseDAO extends AbstractDao<Clase>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
     }
 
     public ArrayList<String> columnas(){
@@ -94,6 +100,8 @@ public class ClaseDAO extends AbstractDao<Clase>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
 
         return columnas;
     }

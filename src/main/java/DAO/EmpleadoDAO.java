@@ -42,6 +42,8 @@ public class EmpleadoDAO extends AbstractDao<Empleado>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return empleado;
     }
 
@@ -72,6 +74,8 @@ public class EmpleadoDAO extends AbstractDao<Empleado>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return empleados;
     }
 
@@ -90,7 +94,7 @@ public class EmpleadoDAO extends AbstractDao<Empleado>{
                     + "," + "'" + empleado.apellidos() + "'" + "," + "'" + empleado.dtContratacion() + "'" + "," + empleado.sueldo()
                     + "," +  "'" + empleado.HoraEntrada() + "'" + "," + "'" +  empleado.HoraSalida() + "'" + "," + "'" + empleado.claseEmpleado() + "'"
                     + "," + null + ")";
-        } // Si explota es porque borré el punto y coma del final
+        }
 
         try {
             conexion.conectar();
@@ -101,6 +105,8 @@ public class EmpleadoDAO extends AbstractDao<Empleado>{
             JOptionPane.showMessageDialog(null,"No se ha podido registrar al empleado");
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
     }
 
     public void despedirEmpleado(int CI){
@@ -115,6 +121,8 @@ public class EmpleadoDAO extends AbstractDao<Empleado>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
     }
 
     public ArrayList<String> getColumnas(){
@@ -135,7 +143,38 @@ public class EmpleadoDAO extends AbstractDao<Empleado>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return columnas;
+    }
+
+    public ArrayList<Empleado> getRecepcionistas(){
+        ArrayList<Empleado> recepcionistas = new ArrayList<>();
+
+        Conexion conexion = Conexion.getInstance();
+        String comando = "select * from empleados where ClaseEmpleado = 'Recepcionista'";
+
+        try {
+            conexion.conectar();
+            Statement statement = conexion.getConexion().createStatement();
+            ResultSet rs = conexion.consulta(statement,comando);
+            while (rs.next()){
+                Empleado empleado = new Empleado(rs.getInt("CI"),
+                        rs.getString("Nombres"),
+                        rs.getString("Apellidos"),
+                        rs.getString("dtContratacion"),
+                        rs.getDouble("Sueldo"),
+                        rs.getString("HoraEntrada"),
+                        rs.getString("HoraSalida"),
+                        rs.getString("ClaseEmpleado"),
+                        rs.getString("tipo"));
+                recepcionistas.add(empleado);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return recepcionistas;
     }
 
 

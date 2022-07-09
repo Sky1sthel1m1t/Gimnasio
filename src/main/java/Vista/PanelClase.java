@@ -5,11 +5,15 @@ import DAO.HorarioDAO;
 import DAO.ZonaDAO;
 import Modelo.Clase;
 import Modelo.Horario;
+import Modelo.Suscripcion;
 import Modelo.Zona;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class PanelClase extends JPanel {
 
@@ -110,6 +114,23 @@ public class PanelClase extends JPanel {
 
         jTable = new JTable(defaultTableModel);
         scrollPane = new JScrollPane(jTable);
+
+        jTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int fila = jTable.getSelectedRow();
+                    String fecha = (String) defaultTableModel.getValueAt(fila,0);
+                    int zonas_ID =  Integer.parseInt((String) defaultTableModel.getValueAt(fila,1));
+                    int horarios_ID = Integer.parseInt((String) defaultTableModel.getValueAt(fila,2));
+
+                    Clase clase = new Clase(fecha,zonas_ID,horarios_ID);
+
+                    PanelAsisten panelAsisten = new PanelAsisten(clase);
+                    VentanaEmergente ventanaEmergente = new VentanaEmergente(panelAsisten);
+                }
+            }
+        });
     }
 
     public void leerDatos(){

@@ -11,6 +11,7 @@ public class Ventana extends JFrame {
     private JButton btnPanelClase = new JButton("Administrar Clases");
     private JButton btnPanelZonas = new JButton("Administrar Zonas");
     private JButton btnPanelSuscripciones = new JButton("Administrar Suscripciones");
+    private JButton btnPanelAccesos = new JButton("Administrar Accesos");
     private JButton btnVolver = new JButton("Volver");
 
     private JPanel panelPrincipal = new JPanel();
@@ -19,6 +20,7 @@ public class Ventana extends JFrame {
     private PanelClase panelClase;
     private PanelZonas panelZonas;
     private PanelSuscripciones panelSuscripciones;
+    private PanelAccesos panelAccesos;
 
     private ArrayList<JPanel> paneles = new ArrayList<>();
 
@@ -35,7 +37,7 @@ public class Ventana extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         int x = this.getWidth()/2 - 100;
-        int y = (this.getHeight() / 2) - 200;
+        int y = (this.getHeight() / 2) - 150;
 
         btnPanelEmpleados.setBounds(x, y, 200,30);
         y += 40;
@@ -46,6 +48,8 @@ public class Ventana extends JFrame {
         btnPanelZonas.setBounds(x,y,200,30);
         y += 40;
         btnPanelSuscripciones.setBounds(x,y,200,30);
+        y += 40;
+        btnPanelAccesos.setBounds(x,y,200,30);
 
         btnPanelEmpleados.addActionListener(e -> {
             if (paneles.size() == 2){
@@ -112,6 +116,19 @@ public class Ventana extends JFrame {
             paneles.add(panelSuscripciones);
         });
 
+        btnPanelAccesos.addActionListener(e -> {
+            if (paneles.size() == 2){
+                paneles.remove(1);
+            }
+
+            panelAccesos = new PanelAccesos(this.getSize());
+            btnVolver.setBounds(0,0,75,30);
+            panelAccesos.add(btnVolver);
+            panelPrincipal.setVisible(false);
+            this.add(panelAccesos);
+            paneles.add(panelAccesos);
+        });
+
         btnVolver.addActionListener(e -> {
             paneles.get(1).setVisible(false);
             panelPrincipal.setVisible(true);
@@ -126,6 +143,7 @@ public class Ventana extends JFrame {
         panelPrincipal.add(btnPanelClase);
         panelPrincipal.add(btnPanelZonas);
         panelPrincipal.add(btnPanelSuscripciones);
+        panelPrincipal.add(btnPanelAccesos);
         paneles.add(panelPrincipal);
 
         this.getContentPane().add(panelPrincipal);

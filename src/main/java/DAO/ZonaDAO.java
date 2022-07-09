@@ -15,7 +15,7 @@ public class ZonaDAO extends AbstractDao<Zona> {
         Zona zona = null;
         Conexion conexion = Conexion.getInstance();
 
-        String comando = "SELECT * FROM Zonas WHERE CI = " + id;
+        String comando = "SELECT * FROM Zonas WHERE ID = " + id;
 
         try {
             conexion.conectar();
@@ -30,6 +30,8 @@ public class ZonaDAO extends AbstractDao<Zona> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
 
         return zona;
     }
@@ -55,6 +57,8 @@ public class ZonaDAO extends AbstractDao<Zona> {
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return zonas;
     }
 
@@ -72,6 +76,8 @@ public class ZonaDAO extends AbstractDao<Zona> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
     }
 
     public void eliminarZona(int ID){
@@ -86,6 +92,8 @@ public class ZonaDAO extends AbstractDao<Zona> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
     }
 
     public ArrayList<String> columnas(){
@@ -105,6 +113,8 @@ public class ZonaDAO extends AbstractDao<Zona> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
 
         return columnas;
     }

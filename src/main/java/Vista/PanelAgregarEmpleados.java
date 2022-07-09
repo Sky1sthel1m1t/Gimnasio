@@ -33,6 +33,7 @@ public class PanelAgregarEmpleados extends JPanel {
     private EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
     private PanelEmpleados panelEmpleados;
+    private VentanaEmergente v;
 
     public PanelAgregarEmpleados(PanelEmpleados p){
         init1();

@@ -31,6 +31,8 @@ public class SuscripcionDAO extends AbstractDao<Suscripcion>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return suscripciones;
     }
 
@@ -55,6 +57,8 @@ public class SuscripcionDAO extends AbstractDao<Suscripcion>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return suscripciones;
     }
 
@@ -72,6 +76,8 @@ public class SuscripcionDAO extends AbstractDao<Suscripcion>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
     }
 
     public void borrarSuscripcion(int ID){
@@ -86,6 +92,8 @@ public class SuscripcionDAO extends AbstractDao<Suscripcion>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
     }
 
     public ArrayList<String> columnas(){
@@ -105,6 +113,8 @@ public class SuscripcionDAO extends AbstractDao<Suscripcion>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
 
         return columnas;
     }

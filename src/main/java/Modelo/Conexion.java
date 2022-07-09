@@ -51,9 +51,13 @@ public class Conexion {
         }
     }
 
-    public void ejecutar(Statement statement, String comando){
+    public void ejecutar(Statement statement, String comando) throws SQLException {
+        statement.execute(comando);
+    }
+
+    public void desconectar(){
         try {
-            statement.execute(comando);
+            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -34,6 +34,8 @@ public class HorarioDAO extends AbstractDao<Horario>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return horario;
     }
 
@@ -59,6 +61,8 @@ public class HorarioDAO extends AbstractDao<Horario>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
 
         return horarios;
     }
@@ -89,6 +93,8 @@ public class HorarioDAO extends AbstractDao<Horario>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
     }
 
     public ArrayList<String> columnas(){
@@ -108,6 +114,8 @@ public class HorarioDAO extends AbstractDao<Horario>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
 
         return columnas;
     }
@@ -134,6 +142,8 @@ public class HorarioDAO extends AbstractDao<Horario>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
 
         return horarios;
     }

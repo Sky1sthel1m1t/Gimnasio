@@ -8,9 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ClienteDAO extends AbstractDao<Cliente>{
+public class ClienteDAO extends AbstractDao<Cliente> {
 
-    public ClienteDAO(){}
+    public ClienteDAO() {
+    }
 
     @Override
     public Cliente get(int id) {
@@ -22,9 +23,9 @@ public class ClienteDAO extends AbstractDao<Cliente>{
         try {
             conexion.conectar();
             Statement statement = conexion.getConexion().createStatement();
-            ResultSet rs = conexion.consulta(statement,comando);
+            ResultSet rs = conexion.consulta(statement, comando);
 
-            if (rs.next()){
+            if (rs.next()) {
                 cliente = new Cliente(rs.getInt("CI"),
                         rs.getString("Nombres"),
                         rs.getString("Apellidos"),
@@ -35,10 +36,12 @@ public class ClienteDAO extends AbstractDao<Cliente>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return cliente;
     }
 
-    public ArrayList<Cliente> getClientes(){
+    public ArrayList<Cliente> getClientes() {
         Conexion conexion = Conexion.getInstance();
         ArrayList<Cliente> clientes = new ArrayList<>();
 
@@ -49,7 +52,7 @@ public class ClienteDAO extends AbstractDao<Cliente>{
             Statement statement = conexion.getConexion().createStatement();
             ResultSet rs = conexion.consulta(statement, comando);
 
-            while (rs.next()){
+            while (rs.next()) {
                 Cliente cliente = new Cliente(rs.getInt("CI"),
                         rs.getString("Nombres"),
                         rs.getString("Apellidos"),
@@ -60,10 +63,12 @@ public class ClienteDAO extends AbstractDao<Cliente>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return clientes;
     }
 
-    public void registrarCliente(Cliente cliente) {
+    public void registrarCliente(Cliente cliente) throws SQLException {
         Conexion conexion = Conexion.getInstance();
 
         String comando;
@@ -72,24 +77,23 @@ public class ClienteDAO extends AbstractDao<Cliente>{
             comando = "INSERT INTO Clientes VALUES(" + cliente.CI() + ","
                     + "'" + cliente.Nombres() + "'" + ","
                     + "'" + cliente.Apellidos() + "'" + ","
-                    + "'" + cliente.Telefono() + "'" + "," + ")";
+                    + "'" + cliente.Telefono() + "'" + ")";
         } else {
             comando = "INSERT INTO Clientes VALUES(" + cliente.CI() + ","
                     + "'" + cliente.Nombres() + "'" + ","
                     + "'" + cliente.Apellidos() + "'" + ","
-                    + null + "," + ")";
+                    + null + ")";
         }
 
-        try {
-            conexion.conectar();
-            Statement statement = conexion.getConexion().createStatement();
-            conexion.ejecutar(statement,comando);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        conexion.conectar();
+        Statement statement = conexion.getConexion().createStatement();
+        conexion.ejecutar(statement, comando);
+
+
+        conexion.desconectar();
     }
 
-    public void borrarCliente(int CI){
+    public void borrarCliente(int CI) {
         Conexion conexion = Conexion.getInstance();
 
         String comando = "DELETE FROM Clientes WHERE CI = " + CI;
@@ -101,5 +105,7 @@ public class ClienteDAO extends AbstractDao<Cliente>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
     }
 }

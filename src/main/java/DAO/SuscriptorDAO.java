@@ -15,7 +15,7 @@ public class SuscriptorDAO extends AbstractDao<Suscriptor>{
         Suscriptor suscriptor = null;
         Conexion conexion = Conexion.getInstance();
 
-        String comando = "SELECT * FROM Suscriptor WHERE ID = " + id;
+        String comando = "SELECT * FROM Suscriptor WHERE Matricula = " + id;
 
         try{
             conexion.conectar();
@@ -34,6 +34,8 @@ public class SuscriptorDAO extends AbstractDao<Suscriptor>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
 
         return suscriptor;
     }
@@ -63,19 +65,21 @@ public class SuscriptorDAO extends AbstractDao<Suscriptor>{
             throw new RuntimeException(e);
         }
 
+        conexion.desconectar();
+
         return suscriptores;
     }
 
-    public void registrarSuscriptor(Suscriptor suscriptor){
+    public void registrarSuscriptor(Suscriptor suscriptor, int dias){
         Conexion conexion = Conexion.getInstance();
 
-        String comando = "INSERT INTO Suscriptor VALUES(" + suscriptor.Matricula() + "," +
+        String comando = "INSERT INTO Suscriptor VALUES(" + "default" + "," +
                 suscriptor.Clientes_CI() + "," +
                 suscriptor.Suscripciones_id() + "," +
                 suscriptor.Empleados_CI() + "," +
-                "'" + suscriptor.dtPrimeraInscripcion() + "'" + "," +
-                "'" + suscriptor.dtInicioSuscripcion() + "'" + "," +
-                "'" + suscriptor.dtFinalSuscripcion() + "'" + ")";
+                "current_date()" + "," +
+                "current_date()" + "," +
+                "date_add(current_date(), Interval " + dias + " day)" + ")";
 
         try {
             conexion.conectar();
@@ -84,6 +88,8 @@ public class SuscriptorDAO extends AbstractDao<Suscriptor>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
     }
 
     public void eliminarSuscriptor(int Matricula, int Clientes_CI, int Suscripciones_id){
@@ -99,5 +105,30 @@ public class SuscriptorDAO extends AbstractDao<Suscriptor>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        conexion.desconectar();
+    }
+
+    public ArrayList<String> columnas(){
+        ArrayList<String> columnas = new ArrayList<>();
+
+        Conexion conexion = Conexion.getInstance();
+        String comando = "DESC Suscriptor";
+
+        try {
+            conexion.conectar();
+            Statement statement = conexion.getConexion().createStatement();
+            ResultSet rs = conexion.consulta(statement,comando);
+            while (rs.next()){
+                String aux = rs.getString("Field");
+                columnas.add(aux);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        conexion.desconectar();
+
+        return columnas;
     }
 }

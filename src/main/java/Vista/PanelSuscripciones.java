@@ -2,7 +2,6 @@ package Vista;
 
 import DAO.SuscripcionDAO;
 import Modelo.Suscripcion;
-import Modelo.Zona;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
