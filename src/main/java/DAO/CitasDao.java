@@ -1,37 +1,39 @@
 package DAO;
 
+import Modelo.Cita;
 import Modelo.Conexion;
-import Modelo.Incidente;
-import Modelo.Suscripcion;
-import Modelo.Suscriptor;
 
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class IncidenteDAO {
+public class CitasDao {
 
-    public ArrayList<Incidente> getIncidentes(){
-        ArrayList<Incidente> incidentes = new ArrayList<>();
+    public ArrayList<Cita> getCitas() {
+        ArrayList<Cita> citas = new ArrayList<>();
         Conexion conexion = Conexion.getInstance();
 
-        String comando = "SELECT * FROM incidentes";
+        String comando = "SELECT * FROM citas";
 
         try {
             conexion.conectar();
             Statement statement = conexion.getConexion().createStatement();
             ResultSet rs = conexion.consulta(statement, comando);
 
-            while (rs.next()){
-                Incidente incidente = new Incidente(
+            while (rs.next()) {
+                Cita cita = new Cita(
                         rs.getString("Fecha"),
-                        rs.getInt("Empleados_CI"),
-                        rs.getInt("Suscriptor_Clientes_CI"),
                         rs.getInt("Suscriptor_Matricula"),
+                        rs.getInt("Suscriptor_Clientes_CI"),
                         rs.getInt("Suscriptor_Suscripciones_ID"),
-                        rs.getString("Razon"));
-                incidentes.add(incidente);
+                        rs.getInt("Empleados_CI"),
+                        rs.getString("Hora"),
+                        rs.getDouble("Peso"),
+                        rs.getString("Observaciones")
+                );
+                citas.add(cita);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -39,38 +41,40 @@ public class IncidenteDAO {
 
         conexion.desconectar();
 
-        return incidentes;
+        return citas;
     }
 
-    public void registrarIncidente(Incidente incidente) throws SQLException {
+    public void registrarCita(Cita cita) throws SQLException {
         Conexion conexion = Conexion.getInstance();
 
-        String comando = "INSERT INTO incidentes VALUES(" +
-                "'" + incidente.fecha() + "'" + "," +
-                incidente.Empleados_CI() + "," +
-                incidente.Suscriptor_Clientes_CI() + "," +
-                incidente.Suscriptor_Matricula() + "," +
-                incidente.Suscriptor_Suscripciones_ID() + "," +
-                "'" + incidente.razon() + "'" + ")";
+        String comando = "INSERT INTO citas VALUES(" +
+                "'" + cita.fecha() + "'" + "," +
+                cita.Suscriptor_Matricula() + "," +
+                cita.Suscriptor_Clientes_CI() + "," +
+                cita.Suscriptor_Suscripciones_ID() + "," +
+                cita.Empleados_CI() + "," +
+                "'" + cita.hora() + "'" + "," +
+                cita.peso() + "," +
+                "'" + cita.observaciones() + "'" + ")";
 
         conexion.conectar();
         Statement statement = conexion.getConexion().createStatement();
-        conexion.ejecutar(statement,comando);
+        conexion.ejecutar(statement, comando);
 
         conexion.desconectar();
     }
 
-    public ArrayList<String> columnas(){
+    public ArrayList<String> getColumnas() {
         ArrayList<String> columnas = new ArrayList<>();
 
         Conexion conexion = Conexion.getInstance();
-        String comando = "DESC incidentes";
+        String comando = "DESC Citas";
 
         try {
             conexion.conectar();
             Statement statement = conexion.getConexion().createStatement();
-            ResultSet rs = conexion.consulta(statement,comando);
-            while (rs.next()){
+            ResultSet rs = conexion.consulta(statement, comando);
+            while (rs.next()) {
                 String aux = rs.getString("Field");
                 columnas.add(aux);
             }

@@ -107,7 +107,6 @@ public class PanelEmpleados extends JPanel {
 
         scrollPane = new JScrollPane(jTable);
 
-        scrollPane.updateUI();
     }
 
     public void leerDatos(){

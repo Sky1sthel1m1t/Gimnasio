@@ -25,7 +25,7 @@ public class PanelAgregarEmpleados extends JPanel {
     private JTextField txtSueldo = new JTextField();
     private JTextField txtHoraEntrada = new JTextField();
     private JTextField txtHoraSalida = new JTextField();
-    private JTextField txtClaseEmpleado = new JTextField();
+    private JComboBox<String> cbClaseEmpleado = new JComboBox<>();
     private JTextField txtTipo = new JTextField();
 
     private JButton btnAgregar = new JButton("Registrar");
@@ -97,10 +97,13 @@ public class PanelAgregarEmpleados extends JPanel {
         txtHoraSalida.setBounds(x,y,150,30);
         TextPrompt ph3 = new TextPrompt("HH-MM-SS",txtHoraSalida);
         y+=40;
-        txtClaseEmpleado.setBounds(x,y,150,30);
+        cbClaseEmpleado.setBounds(x,y,150,30);
         y+=40;
         txtTipo.setBounds(x,y,150,30);
+        txtTipo.setEditable(false);
         TextPrompt ph5 = new TextPrompt("Campo solo para instructores",txtTipo);
+
+        llenarCombobox();
 
         btnAgregar.addActionListener(e -> {
             int CI = Integer.parseInt(txtCI.getText());
@@ -110,14 +113,28 @@ public class PanelAgregarEmpleados extends JPanel {
             double sueldo = Double.parseDouble(txtSueldo.getText());
             String horaEntrada = txtHoraEntrada.getText();
             String horaSalida = txtHoraSalida.getText();
-            String claseEmpleado = txtClaseEmpleado.getText();
+            String claseEmpleado = (String) cbClaseEmpleado.getSelectedItem();
             String tipo = txtTipo.getText();
+
+
 
 
             Empleado aux = new Empleado(CI,nombres,apellidos,fecha,sueldo,
                     horaEntrada,horaSalida,claseEmpleado,tipo);
             empleadoDAO.registrarEmpleado(aux);
             panelEmpleados.leerDatos();
+        });
+
+        cbClaseEmpleado.addItemListener(e -> {
+            if (e.getSource() == cbClaseEmpleado){
+                String seleccionado = (String) cbClaseEmpleado.getSelectedItem();
+                if (seleccionado.equals("Instructor")){
+                    txtTipo.setEditable(true);
+                } else {
+                    txtTipo.setEditable(false);
+                    txtTipo.setText("");
+                }
+            }
         });
 
         this.add(lbCI);
@@ -136,9 +153,16 @@ public class PanelAgregarEmpleados extends JPanel {
         this.add(txtSueldo);
         this.add(txtHoraEntrada);
         this.add(txtHoraSalida);
-        this.add(txtClaseEmpleado);
+        this.add(cbClaseEmpleado);
         this.add(txtTipo);
         this.add(btnAgregar);
+    }
+
+    private void llenarCombobox(){
+        cbClaseEmpleado.addItem("Recepcionista");
+        cbClaseEmpleado.addItem("Instructor");
+        cbClaseEmpleado.addItem("Medico General");
+        cbClaseEmpleado.addItem("Nutricionista");
     }
 
 }

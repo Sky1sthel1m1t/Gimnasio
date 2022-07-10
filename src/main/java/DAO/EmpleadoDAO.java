@@ -177,6 +177,65 @@ public class EmpleadoDAO extends AbstractDao<Empleado>{
         return recepcionistas;
     }
 
+    public ArrayList<Empleado> getMedicos(){
+        ArrayList<Empleado> medicos = new ArrayList<>();
+
+        Conexion conexion = Conexion.getInstance();
+        String comando = "select * from empleados where ClaseEmpleado = 'Medico General'";
+
+        try {
+            conexion.conectar();
+            Statement statement = conexion.getConexion().createStatement();
+            ResultSet rs = conexion.consulta(statement,comando);
+            while (rs.next()){
+                Empleado empleado = new Empleado(rs.getInt("CI"),
+                        rs.getString("Nombres"),
+                        rs.getString("Apellidos"),
+                        rs.getString("dtContratacion"),
+                        rs.getDouble("Sueldo"),
+                        rs.getString("HoraEntrada"),
+                        rs.getString("HoraSalida"),
+                        rs.getString("ClaseEmpleado"),
+                        rs.getString("tipo"));
+                medicos.add(empleado);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return medicos;
+    }
+
+    public ArrayList<Empleado> getNutricionistas(){
+        ArrayList<Empleado> nutricionistas = new ArrayList<>();
+
+        Conexion conexion = Conexion.getInstance();
+        String comando = "select * from empleados where ClaseEmpleado = 'Nutricionista'";
+
+        try {
+            conexion.conectar();
+            Statement statement = conexion.getConexion().createStatement();
+            ResultSet rs = conexion.consulta(statement,comando);
+            while (rs.next()){
+                Empleado empleado = new Empleado(rs.getInt("CI"),
+                        rs.getString("Nombres"),
+                        rs.getString("Apellidos"),
+                        rs.getString("dtContratacion"),
+                        rs.getDouble("Sueldo"),
+                        rs.getString("HoraEntrada"),
+                        rs.getString("HoraSalida"),
+                        rs.getString("ClaseEmpleado"),
+                        rs.getString("tipo"));
+                nutricionistas.add(empleado);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return nutricionistas;
+    }
+
+
 
     //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     //        Date date = new Date();
